@@ -79,8 +79,6 @@ subprocess.call('rcctl start httpd', shell=True)
 subprocess.call('rcctl enable httpd', shell=True)
 
 # MySQL configuration
-subprocess.call('mysql_install_db', shell=True)
-subprocess.call('rcctl start mysqld', shell=True)
 
 # Update MySQL configuration file with new root password
 with open('/etc/my.cnf', 'a') as my_cnf:
@@ -89,6 +87,9 @@ with open('/etc/my.cnf', 'a') as my_cnf:
     my_cnf.write('password        = ' + mysql_root_password + '\n')
     my_cnf.write('port            = 3306\n')
     my_cnf.write('socket          = /var/run/mysql/mysql.sock\n')
+
+subprocess.call('mysql_install_db', shell=True)
+subprocess.call('rcctl start mysqld', shell=True)
 
 subprocess.call('rcctl enable mysqld', shell=True)
 
